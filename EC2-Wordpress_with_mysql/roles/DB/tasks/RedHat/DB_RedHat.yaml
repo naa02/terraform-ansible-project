@@ -1,0 +1,31 @@
+- name: Install MySQL package for Redhat
+  yum:
+    name: python3-pymysql, mysql-server
+    state: present
+
+- name: Starting MySQL Service
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+
+- name: Create Wordpress User
+  mysql_user:
+    check_implicit_admin: yes
+    login_unix_socket: "{{ mysql['socket'] }}"
+    name: "{{ mysql['user'] }}"
+    password: "{{ mysql['passwd'] }}"
+    host: "{{ groups['webserver'][0] }}"
+    priv: "{{ mysql['db'] }}.*:ALL,GRANT"
+    state: present
+
+- name: Create Wordpress Database
+  mysql_db:
+    login_unix_socket: "{{ mysql['socket'] }}"
+    name: "{{ mysql['db'] }}"
+
+- name: Change bind-address
+  template:
+    src: mysqld.cnf.j2
+    dest: "{{ mysql['bind_path'] }}"
+  notify: Mysqld Service Restart

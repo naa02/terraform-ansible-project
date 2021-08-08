@@ -1,0 +1,7 @@
+- name: Deployment DataBase for Debian
+  import_tasks: Debian/DB_Debian.yaml
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Deployment DataBase for RedHat
+  import_tasks: RedHat/DB_RedHat.yaml
+  when: ansible_facts['os_family'] == "RedHat"

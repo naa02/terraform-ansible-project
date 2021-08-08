@@ -1,0 +1,21 @@
+ - name: Install Httpd Package
+   block:
+     - name: Install Httpd Package for RedHat
+       apt:
+         name: httpd, php, php-mysql, php-gd, php-mbstring
+         state: present
+     - name: Start Httpd Service
+       service:
+         name: httpd
+         state: started
+         enabled: yes
+   rescue:
+     - name: Print errors
+       debug:
+         msg: 'Httpd Install Error, :-('
+
+ - name: Change Httpd Ports
+   template:
+     src: httpd.conf.j2
+     dest: "{{ wp['httpd_port'] }}"
+   notify: Restart httpd

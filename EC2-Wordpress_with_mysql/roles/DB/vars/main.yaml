@@ -1,0 +1,8 @@
+mysql:
+  db_host: "{{ private_ip }}"
+  socket: /var/run/mysqld/mysqld.sock
+  db: wpdb
+  user: wpadm
+  passwd: P@ssw0rd
+  bind_path: /etc/mysql/mysql.conf.d/mysqld.cnf
+  bind_address: 0.0.0.0/0

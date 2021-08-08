@@ -1,0 +1,31 @@
+- name: Install MySQL package for Debian
+  apt:
+    update_cache: yes
+    name: python3-pymysql, mysql-server
+    state: present
+
+- name: Starting MySQL Service
+  service:
+    name: mysql
+    state: started
+
+- name: Create Wordpress User
+  mysql_user:
+    check_implicit_admin: yes
+    login_unix_socket: "{{ mysql['socket'] }}"
+    name: "{{ mysql['user'] }}"
+    password: "{{ mysql['passwd'] }}"
+    host: "{{ mysql['db_host'] }}"
+    priv: "{{ mysql['db'] }}.*:ALL,GRANT"
+    state: present
+
+- name: Create Wordpress Database
+  mysql_db:
+    login_unix_socket: "{{ mysql['socket'] }}"
+    name: "{{ mysql['db'] }}"
+
+- name: Change bind-address
+  template:
+    src: mysqld.cnf.j2
+    dest: "{{ mysql['bind_path'] }}"
+  notify: Mysql Service Restart

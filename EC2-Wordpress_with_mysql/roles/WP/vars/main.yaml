@@ -1,0 +1,19 @@
+mysql:
+  db_host: "{{ private_ip }}"
+  socket: /var/run/mysqld/mysqld.sock
+  db: wpdb
+  user: wpadm
+  passwd: P@ssw0rd
+  bind_path: /etc/mysql/mysql.conf.d/mysqld.cnf
+
+wp:
+  url: "https://wordpress.org/wordpress-{{ wp_ver }}.tar.gz"
+  sha1: sha1:6476e69305ba557694424b04b9dea7352d988110
+  source: "/home/ubuntu/wordpress-{{ wp_ver }}.tar.gz"
+  apache_port: /etc/apache2/ports.conf
+  httpd_port: /etc/httpd/conf/httpd.conf
+  config_path: /var/www/html/wordpress/wp-config.php
+
+wp_ver: 5.8
+
+port: "{{ service_port }}"

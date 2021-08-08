@@ -1,0 +1,22 @@
+ - name: Install Apache2 Package
+   block:
+   - name: Install Apache2 Package for Debian
+     apt:
+       name: apache2, php, php-mysql, php-gd, php-mbstring
+       state: present
+   - name: Start Apache2 Service
+     service:
+       name: apache2
+       state: started
+       enabled: yes
+
+   rescue:
+     - name: Print errors
+       debug:
+         msg: 'Apache2 Install Error, :-('
+
+ - name: Change Apache Ports
+   template:
+      src: ports.conf.j2
+      dest: "{{ wp['apache_port'] }}"
+   notify: Restart apache2
