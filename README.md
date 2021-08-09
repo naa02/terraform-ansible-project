@@ -1,9 +1,6 @@
 # terraform-ansible-project
 ### Ansible playbook을 통해 wordpress와 mysql 배포 후 Terraform을 통해 AWS EC2에 적용 + RDS
 ---
-### EC2-Wordpress_with_mysql
-### EC2-Wordpress_with_RDS
----
 - Linux (Debian/RedHat)환경
 - Ansible, AWS CLlv2, Terraform 설치 후 진행
 - Terraform의 local-exec provisioner를 통해 local의 Ansible과 연동
@@ -19,9 +16,6 @@
     ```jsx
     ssh -i my_sshkey ubuntu@[public_ip]
     ```
-
-- 각 roles의 vars 파일의 변수가 최상위 디렉토리의 group_vars 파일의 변수 참조
-
 ---
 
 # EC2-Wordpress_with_mysql
@@ -101,6 +95,7 @@ https://[ public_ip ]:8080/wordpress로 접속
 ### Wordpress: aws_instance.my_instance (EC2)
 
 ### Database: aws_db_instance.my_db_instance (RDS)
+---
 
 - AWS 서울 리전의 Ubuntu Server 18.04 LTS 버전의 AMI 이미지 사용
 - instance_type: t3.micro (variable.tf에 변수로 지정)
